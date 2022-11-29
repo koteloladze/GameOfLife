@@ -31,9 +31,10 @@ namespace GameOfLife
                 for (int j = 0; j < SizeY; j++)
                 {
                     cells[i, j] = new Cell(i, j, 0, false);
+                    cells[i, j].IsAlive = GetRandomBoolean();
+
                 }
 
-            SetRandomPattern();
             InitCellsVisuals();
         }
 
@@ -104,13 +105,6 @@ namespace GameOfLife
             return rnd.NextDouble() > 0.8;
         }
 
-        public void SetRandomPattern()
-        {
-            for (int i = 0; i < SizeX; i++)
-                for (int j = 0; j < SizeY; j++)
-                    cells[i, j].IsAlive = GetRandomBoolean();
-        }
-
         public void UpdateToNextGeneration()
         {
             for (int i = 0; i < SizeX; i++)
@@ -154,7 +148,7 @@ namespace GameOfLife
             if (alive && (count == 2 || count == 3))
             {
                 cells[row, column].Age++;
-                return new Cell(row, column, age, true);
+                return new Cell(row, column, cells[row, column].Age, true);
             }
             else if (!alive && count == 3)
             {
